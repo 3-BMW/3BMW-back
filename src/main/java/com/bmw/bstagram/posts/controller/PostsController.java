@@ -1,6 +1,8 @@
 package com.bmw.bstagram.posts.controller;
 
+import com.bmw.bstagram.posts.dto.PostsDto;
 import com.bmw.bstagram.posts.dto.PostsResponseDto;
+import com.bmw.bstagram.posts.service.PostsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class PostsController {
+
+    private final PostsService postsService;
 
     @Operation(summary = "get posts", description = "지역에 대한 posts들 가져오기")
     @ApiResponses({
@@ -42,5 +46,10 @@ public class PostsController {
         System.out.println(city);
         System.out.println(hashtag);
         return new PostsResponseDto(1);
+    }
+
+    @PostMapping("")
+    public long savePosts(@RequestBody PostsDto.Info registryDto) {
+        return postsService.savePosts(registryDto);
     }
 }
